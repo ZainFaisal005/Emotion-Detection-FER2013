@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Emotion Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #1f1f1f;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .video-container {
+            display: inline-block;
+            width: 60%;
+            max-width: 700px;
+            border: 5px solid #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            margin-top: 20px;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+        .emotion-text {
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 15px;
+            color: #ffcc00;
+        }
+        .test-results {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .test-item {
+            width: 200px;
+            text-align: center;
+            background: #1f1f1f;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        .test-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .upload-section {
+            margin-top: 40px;
+            padding: 20px;
+            background: #1f1f1f;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        .upload-section input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background: #ffffff;
+        }
+        .upload-section button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background: #ffcc00;
+            color: #121212;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-section button:hover {
+            background: #ffaa00;
+        }
+        footer {
+            margin-top: 30px;
+            padding: 15px;
+            background: #1f1f1f;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>Real-Time Emotion Detection</header>
+    <div class="container">
+        <div class="video-container">
+            <img src="{{ url_for('video_feed') }}" alt="Video Feed">
+        </div>
+        <p class="emotion-text">Detecting Emotions in Real Time...</p>
+    </div>
+    
+    <div class="test-results">
+        <h2>Random Test Predictions</h2>
+        {% for img, emotion in test_images %}
+            <div class="test-item">
+                <img src="{{ url_for('static', filename='test_images/' + img) }}" alt="Test Image">
+                <p class="emotion-text">{{ emotion }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="upload-section">
+        <h2>Upload an Image for Prediction</h2>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <br><br>
+            <button type="submit">Predict Emotion</button>
+        </form>
+    </div>
+    
+    <footer>
+        Developed by Alnafay | Powered by AI & Flask
+    </footer>
+</body>
+</html>
